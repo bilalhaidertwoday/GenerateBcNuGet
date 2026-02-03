@@ -9,8 +9,9 @@ $nuGetServerUrl, $githubRepository = GetNuGetServerUrlAndRepository -nuGetServer
 $nuGetToken = $env:nuGetToken
 $symbolsOnly = ($env:symbolsOnly -eq 'true')
 $packageIdTemplate = $env:packageIdTemplate
-
+Write-Host "Before For each"
 foreach($appFile in $apps) {
+    Write-Host "Inside For each app is $appFile"
     $appJson = Get-AppJsonFromAppFile -appFile $appFile
 
     # Test whether a NuGet package exists for this app?
@@ -18,6 +19,7 @@ foreach($appFile in $apps) {
         [PSCustomObject]@{ "url" = $nuGetServerUrl;  "token" = $nuGetToken; "Patterns" = @("*.$($appJson.id)") }
     )
     $package = Get-BcNuGetPackage -packageName $appJson.id -version $appJson.version -select Exact
+    Write-Host "PAckage is $package"
     if (-not $package) {
         # If the app doesn't exist as a nuGet package, create it
         $useAppFile = GetAppFile -appFile $appFile -symbolsOnly:$symbolsOnly
