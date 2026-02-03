@@ -10,7 +10,7 @@ $nuGetToken = $env:nuGetToken
 $symbolsOnly = ($env:symbolsOnly -eq 'true')
 $packageIdTemplate = $env:packageIdTemplate
 Write-Host "Before For each"
-Write-Host "App file is $appFile"
+Write-Host "App file is $apps"
 foreach($appFile in $apps) {
     Write-Host "Inside For each app is $appFile"
     $appJson = Get-AppJsonFromAppFile -appFile $appFile
